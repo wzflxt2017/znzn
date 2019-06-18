@@ -1,0 +1,38 @@
+<div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+    <div class="nano">
+        <div class="nano-content">
+            <ul>
+                <div class="logo"><a href="/"><!-- <img src="/html/assets/images/logo.png" alt="" /> --><span>首页</span></a></div>
+                <li class="label">主页</li>
+                <li><a class="sidebar-sub-toggle"><i class="ti-home"></i> Dashboard <!--<span class="badge badge-primary">2</span> --><span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                    <ul>
+                        <li><a href="index.html">Dashboard 1</a></li>
+                        <li><a href="index1.html">Dashboard 2</a></li>
+                    </ul>
+                </li>
+
+                <li class="label">测试</li>
+                <li><a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>  测试  <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                    <ul>
+                        <li><a href="/exam/uprightMan">直男测试</a></li>
+                        <li><a href="chart-morris.html">渣男测试</a></li>
+                        <li><a href="chartjs.html">直女测试</a></li>
+                        <li><a href="chartist.html">渣女测试</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="/index/outLogin"><i class="ti-close"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(".sidebar-sub-toggle").click(function(){
+        if ($(this).parent("li").attr("class")&&$(this).parent("li").attr("class").indexOf("open")>-1){
+            $(this).parent("li").removeClass("open");
+        }else{
+            $(this).parent("li").addClass("open");
+        }
+
+    })
+</script>

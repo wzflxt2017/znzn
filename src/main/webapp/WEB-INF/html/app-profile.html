@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>个人信息</title>
+  <#include "./common/head.html">
+    <!--&lt;!&ndash; ================= Favicon ================== &ndash;&gt;-->
+    <!--&lt;!&ndash; Standard &ndash;&gt;-->
+    <!--<link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">-->
+    <!--&lt;!&ndash; Retina iPad Touch Icon&ndash;&gt;-->
+    <!--<link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">-->
+    <!--&lt;!&ndash; Retina iPhone Touch Icon&ndash;&gt;-->
+    <!--<link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">-->
+    <!--&lt;!&ndash; Standard iPad Touch Icon&ndash;&gt;-->
+    <!--<link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">-->
+    <!--&lt;!&ndash; Standard iPhone Touch Icon&ndash;&gt;-->
+    <!--<link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">-->
+
+    <!--&lt;!&ndash; Toastr &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/toastr/toastr.min.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Sweet Alert &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/sweetalert/sweetalert.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Range Slider &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/rangSlider/ion.rangeSlider.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/lib/rangSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Bar Rating &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/barRating/barRating.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Nestable &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/nestable/nestable.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; JsGrid &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/jsgrid/jsgrid-theme.min.css" rel="stylesheet" />-->
+    <!--<link href="/html/assets/css/lib/jsgrid/jsgrid.min.css" type="text/css" rel="stylesheet" />-->
+    <!--&lt;!&ndash; Datatable &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/datatable/dataTables.bootstrap.min.css" rel="stylesheet" />-->
+    <!--<link href="/html/assets/css/lib/data-table/buttons.bootstrap.min.css" rel="stylesheet" />-->
+    <!--&lt;!&ndash; Calender 2 &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/calendar2/pignose.calendar.min.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Weather Icon &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/weather-icons.css" rel="stylesheet" />-->
+    <!--&lt;!&ndash; Owl Carousel &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/owl.carousel.min.css" rel="stylesheet" />-->
+    <!--<link href="/html/assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />-->
+    <!--&lt;!&ndash; Select2 &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/select2/select2.min.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Chartist &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/chartist/chartist.min.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Calender &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/calendar/fullcalendar.css" rel="stylesheet" />-->
+
+    <!--&lt;!&ndash; Common &ndash;&gt;-->
+    <!--<link href="/html/assets/css/lib/font-awesome.min.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/lib/themify-icons.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/lib/menubar/sidebar.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/lib/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/lib/helper.css" rel="stylesheet">-->
+    <!--<link href="/html/assets/css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+<#include "./common/sidebar.html">
+
+<#include "./common/header.html">
+
+
+  <div class="content-wrap">
+    <div class="main">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-8 p-r-0 title-margin-right">
+            <div class="page-header">
+              <div class="page-title">
+                <h1>你好,
+                  <span>${user.fullName}</span>
+                </h1>
+              </div>
+            </div>
+          </div>
+          <!-- /# column -->
+          <div class="col-lg-4 p-l-0 title-margin-left">
+            <div class="page-header">
+              <div class="page-title">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">App-Profile</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- /# column -->
+        </div>
+        <!-- /# row -->
+        <section id="main-content">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="user-photo m-b-30">
+                        <#if image??>
+                        <img id="userPhoto" class="img-fluid" src="${image.filePath!}" onclick="toClick('userPhotoFile')" alt="" />
+                        <#else>
+                        <img id="userPhoto" class="img-fluid" src="/html/assets/images/user-profile.jpg" onclick="toClick('userPhotoFile')" alt="" />
+                      </#if>
+                        <form id="photoForm" enctype="multipart/form-data">
+                          <input type="file" style="display: none;" class="form-control input-rounded" id="userPhotoFile" onchange="photoSub()" name="userPhotoFile" value="${userPhoto!}">
+                        </form>
+                      </div>
+                    </div>
+                    <div class="basic-form col-lg-8">
+                      <form id="myform" >
+                        <div class="form-group">
+                          <div class="row" style="display: none;">
+                            <label class="col-sm-2 control-label">id:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="sysUserId" name="sysUserId" value="${user.sysUserId!}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-2 control-label">用户名:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="userName" disabled name="userName" value="${user.userName!}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-2 control-label">昵称:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="fullName" name="fullName" value="${user.fullName!}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-4 control-label">个性签名:</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-10">
+                              <textarea class="form-control input-default" id="userSign" name="userSign" rows="5" style="height: 100px" >${user.userSign!}</textarea>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-2 control-label">生日:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="userBirthday" name="userBirthday" value="${user.userBirthday?date}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-2 control-label">邮箱:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="userEmail" name="userEmail" value="${user.userEmail!}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-2 control-label">电话:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control input-rounded" id="userPhone" name="userPhone" value="${user.userPhone!}">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div style="width:100%;text-align: center">
+                              <button type="button" id="modify" onclick="modifyInfo()" class="btn btn-primary m-b-10 m-l-5">修改</button>
+                              <button type="submit" id="save"  class="btn btn-primary m-b-10 m-l-5">保存</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /# row -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-title">
+                  <h4>答题记录 </h4>
+
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover ">
+                      <thead>
+                        <tr>
+                          <th>考卷名</th>
+                          <th>考试类型</th>
+                          <th>答题日期</th>
+                          <th>分数</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>心理测试</td>
+                          <td>
+                            <span class="badge badge-primary">直男</span>
+                          </td>
+                          <td>2019-06-05</td>
+                          <td class="color-primary">100</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /# column -->
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="footer">
+                <p>2018 © Admin Board. - <a href="#">example.com</a> / More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+<script>
+  $(function(){
+      $("#save").hide();
+      $("#myform .form-control").attr("readonly","readonly");
+      $("#myform").ajaxForm({
+          url:"/user/modifyInfo",
+          type:"POST",
+          beforeSubmit:function(){
+              var canSub=true;
+              $("#myform .form-control").each(function(){
+                  if(isEmpty($(this).val())){
+                      canSub=false;
+                  }
+              });
+              return canSub;
+          },
+          success:function(){
+              $("#save").hide();
+              $("#modify").show();
+              $("#myform .form-control").attr("readonly","readonly");
+          },
+          error:function () {
+
+          },
+          //resetForm: true,  //成功提交后，是否重置所有表单元素的值
+      });
+      $("#photoForm").ajaxForm({
+          url:"/user/modifyPhoto",
+          type:"POST",
+          beforeSubmit:function(){
+              return true;
+          },
+          success:function(data){
+              if(data){
+                  console.log(data);
+                  $("#userPhoto").attr("src",data.filePath);
+              }
+          },
+          error:function () {
+
+          },
+          //resetForm: true,  //成功提交后，是否重置所有表单元素的值
+      });
+
+  });
+
+  function modifyInfo(){
+      $("#save").show();
+      $("#modify").hide();
+      $("#myform .form-control").removeAttr("readonly");
+  }
+
+  $("#userBirthday").datetimepicker({
+      language:  "zh-CN",
+      format: "yyyy-mm-dd",//显示格式
+      initialDate: new Date(),//初始化当前日期
+      autoclose: true,//选中自动关闭
+      todayBtn: true, //显示今日按钮
+      clearBtn : true,
+      pickerPosition: "bottom-left"
+  });
+
+  function photoSub(){
+      $("#photoForm").submit();
+  }
+
+</script>
+
+</body>
+
+</html>
