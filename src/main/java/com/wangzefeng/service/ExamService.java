@@ -1,7 +1,16 @@
 package com.wangzefeng.service;
 
+import com.wangzefeng.pojo.TestExamination;
+import com.wangzefeng.pojo.TestProblems;
+
+import java.util.List;
+
 /**
  * Created by wangzefeng on 2019/6/17 0017.
  */
 public interface ExamService {
+    TestExamination startExam(String type);
+    int save(TestExamination examination);
+    List<TestProblems> selectRandProblems(int limit);
+    List<TestExamination> selectByUser(String sysUserId);
 }

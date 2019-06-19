@@ -90,3 +90,9 @@ CREATE TABLE all_file (
 	CONSTRAINT `fk5_upload_user_id` FOREIGN KEY (`upload_user_id`) REFERENCES `sys_user` (`sys_user_id`)
 ) ENGINE = INNODB charset = utf8;
 
+
+
+INSERT INTO `znzn`.`test_type` (`test_type_id`, `test_name`, `test_remark`, `type_class`) VALUES ('5b300492d1c0499987a0e7a83d88bc19', '直男测试', 'upright man', 'upm');
+INSERT INTO `znzn`.`test_type` (`test_type_id`, `test_name`, `test_remark`, `type_class`) VALUES ('5b300492d1c0499987a0e7a83d88bc20', '直女测试', 'upright woman', 'upwm');
+INSERT INTO `znzn`.`test_type` (`test_type_id`, `test_name`, `test_remark`, `type_class`) VALUES ('5b300492d1c0499987a0e7a83d88bc21', '渣男测试', 'Player Man', 'pm');
+INSERT INTO `znzn`.`test_type` (`test_type_id`, `test_name`, `test_remark`, `type_class`) VALUES ('5b300492d1c0499987a0e7a83d88bc22', '渣女测试', 'Player Woman', 'pw');

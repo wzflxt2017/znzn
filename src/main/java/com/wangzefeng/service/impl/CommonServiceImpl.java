@@ -5,6 +5,7 @@ import com.wangzefeng.pojo.SysUser;
 import com.wangzefeng.service.CommonService;
 import com.wangzefeng.tools.MD5Util;
 import com.wangzefeng.tools.ValidateUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,13 @@ import org.springframework.stereotype.Service;
 @Service("commonService")
 public class CommonServiceImpl implements CommonService {
 
+    private Logger logger=Logger.getLogger(CommonServiceImpl.class);
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    public CommonServiceImpl() {
+        logger.info("构造方法CommonServiceImpl()正在执行");
+    }
 
     /**
      *
