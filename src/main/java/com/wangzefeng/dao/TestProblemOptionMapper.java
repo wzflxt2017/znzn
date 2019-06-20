@@ -93,4 +93,10 @@ public interface TestProblemOptionMapper {
      * @mbggenerated Tue Jun 04 14:35:00 CST 2019
      */
     int updateByPrimaryKey(TestProblemOption record);
+
+    List<TestProblemOption> selectByProblemsId(String testProblemsId);
+
+
+
+
 }

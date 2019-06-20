@@ -60,8 +60,8 @@
     <selectKey resultType="java.lang.String" keyProperty="testTypeId" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into test_type (test_name, test_remark,type_class)
-    values (#{testName,jdbcType=VARCHAR}, #{testRemark,jdbcType=VARCHAR}), #{type_class,jdbcType=VARCHAR})
+    insert into test_type (test_type_id,test_name, test_remark,type_class)
+    values (#{testTypeId,jdbcType=VARCHAR},#{testName,jdbcType=VARCHAR}, #{testRemark,jdbcType=VARCHAR}), #{type_class,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wangzefeng.pojo.TestType" >
     <selectKey resultType="java.lang.String" keyProperty="testTypeId" order="AFTER" >

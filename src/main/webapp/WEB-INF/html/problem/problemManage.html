@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>题目管理</title>
+    <#include "/common/head.html">
+</head>
+<body>
+<#include "/common/sidebar.html">
+
+<#include "/common/header.html">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="btn-group">
+            <button class="btn btn-success" type="button" >添加</button>
+            <button class="btn btn-success" type="button" >删除</button>
+        </div>
+    </div>
+    <div id="allProblem">
+
+    </div>
+</div>
+<div id="p_template" style="display: none;">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="btn-group">
+                    <button class="btn btn-success" type="button" >修改</button>
+                    <button class="btn btn-success" type="button" >删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.ajax({
+        url:"/exam/problems",
+        data:{
+
+        },
+        type:"POST",
+        dataType:"json",
+        success:function(data){
+            console.log(data);
+        },
+        error:function (data) {
+
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -34,14 +34,14 @@
                         <div class="recent-comment m-t-15">
                             <#if testExaminations??>
                             <#list testExaminations as ps>
-                            <div class="media" id="${ps.testExaminationId!}">
+                            <div class="media" id="${ps.testExaminationId!}" onclick="forword('/exam/startExam/type/${ps.testExaminationId!}')">
                                 <div class="media-left">
                                     <a href="#"><img class="media-object" src="/html/assets/images/avatar/1.jpg" alt="..."></a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading color-primary">${ps.sysUserId!}</h4>
-                                    <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                    <p class="comment-date">10 min ago</p>
+                                    <h4 class="media-heading <#if ps.endTime??> color-success<#else> color-danger </#if>">${ps.testType.testName!}</h4>
+                                    <p>${ps.sysUser.fullName!},${ps.startTime?string("yyyy-MM-dd")}--${(ps.endTime?string("yyyy-MM-dd"))!}</p>
+                                    <p class="comment-date">分数：${ps.testNumber!}</p>
                                 </div>
                             </div>
                             </#list>

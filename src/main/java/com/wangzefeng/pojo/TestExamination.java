@@ -18,6 +18,10 @@ public class TestExamination {
 
     private String sysUserId;
 
+    private TestType testType;
+
+    private SysUser sysUser;
+
     public String getTestExaminationId() {
         return testExaminationId;
     }
@@ -73,5 +77,21 @@ public class TestExamination {
 
     public void setSysUserId(String sysUserId) {
         this.sysUserId = sysUserId == null ? null : sysUserId.trim();
+    }
+
+    public TestType getTestType() {
+        return testType;
+    }
+
+    public void setTestType(TestType testType) {
+        this.testType = testType;
+    }
+
+    public SysUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SysUser sysUser) {
+        this.sysUser = sysUser;
     }
 }

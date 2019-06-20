@@ -15,6 +15,8 @@
     <result column="user_answer" property="userAnswer" jdbcType="VARCHAR" />
     <result column="right_answer" property="rightAnswer" jdbcType="VARCHAR" />
     <result column="is_right" property="isRight" jdbcType="VARCHAR" />
+    <association property="testExamination" column="test_examination_id"  javaType="TestExamination" select="com.wangzefeng.dao.TestExaminationMapper.selectByPrimaryKey"/>
+    <association property="testProblems" column="test_problems_id"  javaType="TestProblems" select="com.wangzefeng.dao.TestProblemsMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--

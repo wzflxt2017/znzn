@@ -14,22 +14,50 @@
 <div class="content-wrap">
     <div class="main">
         <div class="container-fluid">
-            <div class="col-12 text-center">
-                <div class="card">
-                    <h1 class="display-4">第一题</h1>
-                    <div class="card-body">
-                        ${problems.testContent!}
-                        <div class="card">
-                            <div class="card-body">
-                                sss
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="problems" class="col-12 text-center">
+
             </div>
         </div>
     </div>
 </div>
+
+<div id="p_template" style="display: none;">
+    <div class="card p_body">
+        <h1 class="display-4 p_size"> </h1>
+        <div class="card-body p_content">
+ssssssssss
+        </div>
+    </div>
+</div>
+<div id="o_template" style="display: none;">
+    <div class="card-body o_body">
+        <div class="card">
+            <div class="card-body o_content">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.ajax({
+        url:"/exam/nextProblem",
+        data:{
+            testExaminationId:"${testExaminationId!}"
+        },
+        type:"POST",
+        dataType:"json",
+        success:function(data){
+            var x;
+            $.extend(x,$("#p_template").html());
+            x.find(".o_content").text("aaaaaaaaa");
+            console.log(data);
+            $("#problems").append(x)
+        },
+        error:function(){
+
+        }
+    })
+</script>
 
 </body>
 </html>
