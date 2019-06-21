@@ -1,7 +1,10 @@
 package com.wangzefeng.service;
 
 import com.wangzefeng.pojo.TestExamination;
+import com.wangzefeng.pojo.TestProblemOption;
 import com.wangzefeng.pojo.TestProblems;
+import com.wangzefeng.pojo.TestType;
+import com.wangzefeng.pojo.model.TestProblemOptionModel;
 
 import java.util.List;
 
@@ -13,4 +16,6 @@ public interface ExamService {
     int save(TestExamination examination);
     List<TestProblems> selectRandProblems(int limit);
     List<TestExamination> selectByUser(String sysUserId);
+    List<TestType> selectAllType();
+    String addProblem(TestProblems testProblems, TestProblemOptionModel optionModel);
 }

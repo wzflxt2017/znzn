@@ -229,5 +229,19 @@
     from test_problem_option
     where test_problems_id = #{testProblemsId,jdbcType=VARCHAR}
   </select>
+  <insert id="insertList" parameterType="com.wangzefeng.pojo.TestProblemOption" >
+    insert into test_problem_option (
+      test_problem_option_id,test_problems_id, option_title, option_content
+    )
+    values
+    <foreach collection="list" item="option" separator="," close=";">
+    (
+      #{option.testProblemOptionId,jdbcType=VARCHAR},
+      #{option.testProblemsId,jdbcType=VARCHAR},
+      #{option.optionTitle,jdbcType=VARCHAR},
+      #{option.optionContent,jdbcType=VARCHAR}
+    )
+    </foreach>
+  </insert>
 
 </mapper>

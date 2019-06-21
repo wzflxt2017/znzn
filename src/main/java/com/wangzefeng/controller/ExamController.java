@@ -2,6 +2,8 @@ package com.wangzefeng.controller;
 
 import com.wangzefeng.pojo.TestExamination;
 import com.wangzefeng.pojo.TestProblems;
+import com.wangzefeng.pojo.TestType;
+import com.wangzefeng.pojo.model.TestProblemOptionModel;
 import com.wangzefeng.service.ExamService;
 import com.wangzefeng.tools.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ public class ExamController extends BaseController {
 
     @Autowired
     private ExamService examService;
+
 
     @RequestMapping("/uprightMan")
     public ModelAndView uprightMan(ModelAndView modelAndView){
@@ -62,8 +66,28 @@ public class ExamController extends BaseController {
     }
 
     @RequestMapping(value="/problemManage")
-    public String problemManage(){
-        return "problem/problemManage";
+    public ModelAndView problemManage(ModelAndView modelAndView){
+        List<TestType> testTypes = examService.selectAllType();
+        modelAndView.addObject("testTypes",testTypes);
+        modelAndView.setViewName("problem/problemManage");
+        return modelAndView;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="/problems")
+    public List<TestProblems> problems(){
+        List<TestProblems> testProblems = examService.selectRandProblems(1);
+        return testProblems;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/addProblem")
+    public String addProblem(TestProblems testProblems, TestProblemOptionModel options){
+        testProblems.setPropositionalUserId(getSysUser().getSysUserId());
+        testProblems.setPropositionalDate(new Date());
+        examService.addProblem(testProblems,options);
+        return "1";
     }
 
 

@@ -95,6 +95,7 @@ public interface TestProblemOptionMapper {
     int updateByPrimaryKey(TestProblemOption record);
 
     List<TestProblemOption> selectByProblemsId(String testProblemsId);
+    int insertList(List<TestProblemOption> list);
 
 
 

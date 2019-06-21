@@ -1,12 +1,16 @@
 package com.wangzefeng.service.impl;
 
 import com.wangzefeng.dao.TestExaminationMapper;
+import com.wangzefeng.dao.TestProblemOptionMapper;
 import com.wangzefeng.dao.TestProblemsMapper;
 import com.wangzefeng.dao.TestTypeMapper;
 import com.wangzefeng.pojo.TestExamination;
+import com.wangzefeng.pojo.TestProblemOption;
 import com.wangzefeng.pojo.TestProblems;
 import com.wangzefeng.pojo.TestType;
+import com.wangzefeng.pojo.model.TestProblemOptionModel;
 import com.wangzefeng.service.ExamService;
+import com.wangzefeng.tools.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,8 @@ public class ExamServiceImpl implements ExamService {
     private TestExaminationMapper testExaminationMapper;
     @Autowired
     private TestProblemsMapper testProblemsMapper;
+    @Autowired
+    private TestProblemOptionMapper testProblemOptionMapper;
 
     public TestExamination startExam(String type){
         TestType testType = testTypeMapper.selectByTypeClass(type);
@@ -50,5 +56,24 @@ public class ExamServiceImpl implements ExamService {
     public List<TestExamination> selectByUser(String sysUserId) {
         List<TestExamination> testExaminations = testExaminationMapper.selectByUser(sysUserId);
         return testExaminations;
+    }
+
+    @Override
+    public List<TestType> selectAllType() {
+        return testTypeMapper.selectAll();
+    }
+
+    @Override
+    public String addProblem(TestProblems testProblems, TestProblemOptionModel optionModel) {
+        String uUid = ValidateUtil.getUUid();
+        testProblems.setTestProblemsId(uUid);
+        testProblemsMapper.insert(testProblems);
+        List<TestProblemOption> options = optionModel.getOptions();
+        for(TestProblemOption option:options){
+            option.setTestProblemsId(uUid);
+            option.setTestProblemOptionId(ValidateUtil.getUUid());
+        }
+        testProblemOptionMapper.insertList(options);
+        return null;
     }
 }

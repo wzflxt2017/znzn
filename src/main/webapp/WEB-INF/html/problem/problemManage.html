@@ -10,44 +10,209 @@
 
 <#include "/common/header.html">
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="btn-group">
-            <button class="btn btn-success" type="button" >添加</button>
-            <button class="btn btn-success" type="button" >删除</button>
-        </div>
-    </div>
-    <div id="allProblem">
 
-    </div>
-</div>
-<div id="p_template" style="display: none;">
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <div class="btn-group">
-                    <button class="btn btn-success" type="button" >修改</button>
-                    <button class="btn btn-success" type="button" >删除</button>
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div id="problems" class="col-12 text-center">
+                <div class="row pl-lg-5" >
+                    <div class="btn-group">
+                        <button class="btn btn-success p_add" type="button" data-toggle="modal" data-target="#addModal">添加</button>
+                        <button class="btn btn-danger p_delete" type="button" onclick="deleteProblems()" >删除</button>
+                    </div>
+                </div>
+                <div id="allProblem">
+                    <table class="table table-hover table-bordered" align="center">
+                        <thead>
+                        <tr>
+                            <th width="10%"><input type="checkbox" class="p_checked" value=""></th>
+                            <th width="20%">操作</th>
+                            <th width="10%">出题人</th>
+                            <th width="10%">类型</th>
+                            <th width="10%">分数</th>
+                            <th width="20%">日期</th>
+                            <th width="10%">难度系数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" style="float: right;">
+                    <ul class="pagination center-block">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 模态框 -->
+            <div class="modal fade" id="addModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">添加问题</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <form id="myform">
+                                <div class="form-group">
+                                    <label for="testContent">描述</label>
+                                    <textarea class="form-control" style="height: 100px;" id="testContent" name="testContent" placeholder="例如：我和你妈妈同时掉进水里，你先救谁？"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>选项 <button type="button" class="btn btn-primary" onclick="addOption()">添加选项</button></label>
+                                    <div id="optionAdd">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>正确答案</label>
+                                    <select class="form-control" id="testAnswer" name="testAnswer">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="testNumber">分值</label>
+                                    <input type="text" class="form-control" id="testNumber" name="testNumber" placeholder="Enter password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="testTypeId">类型</label>
+                                    <select class="form-control" id="testTypeId" name="testTypeId">
+                                        <#list testTypes as type >
+                                        <option value="${type.testTypeId}">${type.testName!}</option>
+                                        </#list>
+                                    </select>
+                                    <!--<input type="text" class="form-control" id="testName" name="testName" placeholder="Enter password">-->
+                                </div>
+                                <div class="form-group">
+                                    <label for="degreeOfDifficulty">难度系数</label>
+                                    <input type="text" class="form-control" id="degreeOfDifficulty" name="degreeOfDifficulty" placeholder="填写1-10的数字">
+                                </div>
+                                <button type="submit" id="sub" style="display: none;" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="toClick('sub')">提交</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<div id="p_template" style="display: none;">
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th class="t_checked">
+                <input type="checkbox" class="t_checked" value="">
+            </th>
+            <th class="t_bar">
+                <button class="btn btn-default t_modify" type="button" >修改</button>
+                <button class="btn btn-danger t_delete" type="button" >删除</button>
+            </th>
+            <th class="t_fullName">出题人</th>
+            <th class="t_testName">类型</th>
+            <th class="t_testNumber">分数</th>
+            <th class="t_propositionalDate">日期</th>
+            <th class="t_degreeOfDifficulty">难度系数</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="o_template" style="display: none;">
+    <div class="form-inline">
+        <input type="text" class="form-control optionTitle" style="width: 10%;" name="options[0].optionTitle" readonly  >
+        <input type="text" class="form-control optionContent" style="width: 90%;" name="options[0].optionContent"  placeholder="填写选项内容">
+    </div>
+</div>
 <script>
-    $.ajax({
-        url:"/exam/problems",
-        data:{
 
-        },
-        type:"POST",
-        dataType:"json",
-        success:function(data){
-            console.log(data);
-        },
-        error:function (data) {
+    $(function(){
+        initProblems();
 
-        }
-    })
+        $("#myform").ajaxForm({
+            url:"/exam/addProblem",
+            type:"POST",
+            beforeSubmit:function(){
+                var canSub=true;
+
+                return canSub;
+            },
+            success:function(){
+
+            },
+            error:function () {
+
+            },
+            //resetForm: true,  //成功提交后，是否重置所有表单元素的值
+        });
+    });
+
+    function initProblems(){
+        $.ajax({
+            url:"/exam/problems",
+            data:{
+
+            },
+            type:"POST",
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                $("#allProblem tbody").children().remove();
+                if(data&&data.length>0){
+                    for(var pb in data){
+                        var cloneNode=$("#p_template tr").clone();
+                        $(cloneNode).attr("id",data[pb].testProblemsId);
+                        $(cloneNode).find(".t_fullName").text(data[pb].sysUser.fullName);
+                        $(cloneNode).find(".t_testName").text(data[pb].testType.testName);
+                        $(cloneNode).find(".t_testNumber").text(data[pb].testNumber);
+                        $(cloneNode).find(".t_propositionalDate").text(dateFtt("yyyy-MM-dd",new Date(data[pb].propositionalDate)));
+                        $(cloneNode).find(".t_degreeOfDifficulty").text(data[pb].degreeOfDifficulty);
+                        $("#allProblem tbody").append(cloneNode);
+                    }
+                }
+            },
+            error:function (data) {
+
+            }
+        });
+    }
+    function addProblem(){
+
+    }
+
+    function deleteProblems(){
+
+    }
+
+    function addOption(){
+        var option=$("#o_template>.form-inline").clone()
+        $("#optionAdd>.form-inline").length;
+        var a='A'.charCodeAt(0)+$("#optionAdd>.form-inline").length;
+        var x=String.fromCharCode(a);
+        $(option).find(".optionTitle").val(x);
+        $(option).find(".optionTitle").attr("name","options["+$("#optionAdd>.form-inline").length+"].optionTitle");
+        $(option).find(".optionContent").attr("name","options["+$("#optionAdd>.form-inline").length+"].optionContent");
+        $("#optionAdd").append(option);
+
+        $("#testAnswer").append("<option value='"+x+"'>"+x+"</option>");
+    }
 </script>
 
 </body>
