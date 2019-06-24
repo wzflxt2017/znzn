@@ -15,6 +15,7 @@ public interface ExamService {
     TestExamination startExam(String type);
     int save(TestExamination examination);
     List<TestProblems> selectRandProblems(int limit);
+    List<TestProblems> selectProblemsByLimit(int start,int count);
     List<TestExamination> selectByUser(String sysUserId);
     List<TestType> selectAllType();
     String addProblem(TestProblems testProblems, TestProblemOptionModel optionModel);

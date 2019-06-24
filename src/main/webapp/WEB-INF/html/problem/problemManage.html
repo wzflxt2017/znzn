@@ -94,7 +94,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="degreeOfDifficulty">难度系数</label>
-                                    <input type="text" class="form-control" id="degreeOfDifficulty" name="degreeOfDifficulty" placeholder="填写1-10的数字">
+                                    <select class="form-control" id="degreeOfDifficulty" name="degreeOfDifficulty">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
                                 </div>
                                 <button type="submit" id="sub" style="display: none;" class="btn btn-primary">Submit</button>
                             </form>
@@ -155,7 +161,7 @@
                 return canSub;
             },
             success:function(){
-
+                initProblems();
             },
             error:function () {
 
@@ -184,6 +190,8 @@
                         $(cloneNode).find(".t_testNumber").text(data[pb].testNumber);
                         $(cloneNode).find(".t_propositionalDate").text(dateFtt("yyyy-MM-dd",new Date(data[pb].propositionalDate)));
                         $(cloneNode).find(".t_degreeOfDifficulty").text(data[pb].degreeOfDifficulty);
+                        $(cloneNode).find(".t_delete").onclick(deleteProblem(data[pb].testProblemsId));
+                        $(cloneNode).find(".t_modify").onclick();
                         $("#allProblem tbody").append(cloneNode);
                     }
                 }
@@ -199,6 +207,20 @@
 
     function deleteProblems(){
 
+    }
+    function deleteProblem(problemId){
+        $.ajax({
+            url:"/exam/deleteProblems",
+            data:{
+                problemId:problemId
+            },
+            type:"POST",
+            success:function(data){
+                if(data&&data==1){
+                    initProblems();
+                }
+            }
+        })
     }
 
     function addOption(){

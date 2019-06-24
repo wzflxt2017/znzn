@@ -76,8 +76,12 @@ public class ExamController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value="/problems")
-    public List<TestProblems> problems(){
-        List<TestProblems> testProblems = examService.selectRandProblems(1);
+    public List<TestProblems> problems(Integer page,Integer num){
+        if(page==null||num==null){
+            page=0;
+            num=15;
+        }
+        List<TestProblems> testProblems = examService.selectProblemsByLimit(page*num,num);
         return testProblems;
     }
 

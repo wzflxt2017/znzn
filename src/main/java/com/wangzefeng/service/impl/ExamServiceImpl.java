@@ -8,6 +8,7 @@ import com.wangzefeng.pojo.TestExamination;
 import com.wangzefeng.pojo.TestProblemOption;
 import com.wangzefeng.pojo.TestProblems;
 import com.wangzefeng.pojo.TestType;
+import com.wangzefeng.pojo.model.Page;
 import com.wangzefeng.pojo.model.TestProblemOptionModel;
 import com.wangzefeng.service.ExamService;
 import com.wangzefeng.tools.ValidateUtil;
@@ -75,5 +76,11 @@ public class ExamServiceImpl implements ExamService {
         }
         testProblemOptionMapper.insertList(options);
         return null;
+    }
+
+    @Override
+    public List<TestProblems> selectProblemsByLimit(int start, int count) {
+        List<TestProblems> testProblems = testProblemsMapper.selectProblemsByLimit(new Page(start,count,null));
+        return testProblems;
     }
 }

@@ -3,6 +3,8 @@ package com.wangzefeng.dao;
 import com.wangzefeng.pojo.TestProblems;
 import com.wangzefeng.example.TestProblemsExample;
 import java.util.List;
+
+import com.wangzefeng.pojo.model.Page;
 import org.apache.ibatis.annotations.Param;
 
 public interface TestProblemsMapper {
@@ -19,8 +21,6 @@ public interface TestProblemsMapper {
 
     List<TestProblems> selectByExample(TestProblemsExample example);
 
-    List<TestProblems> selectByRand(int limit);
-
     TestProblems selectByPrimaryKey(String testProblemsId);
 
     int updateByExampleSelective(@Param("record") TestProblems record, @Param("example") TestProblemsExample example);
@@ -30,4 +30,7 @@ public interface TestProblemsMapper {
     int updateByPrimaryKeySelective(TestProblems record);
 
     int updateByPrimaryKey(TestProblems record);
+
+    List<TestProblems> selectByRand(int limit);
+    List<TestProblems> selectProblemsByLimit(Page page);
 }

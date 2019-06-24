@@ -97,15 +97,6 @@
     from test_problems
     where test_problems_id = #{testProblemsId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByRand" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    <!--
-      随机获取n条数据
-    -->
-    select
-    <include refid="Base_Column_List" />
-    from test_problems
-    ORDER BY RAND() LIMIT #{limit,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from test_problems
     where test_problems_id = #{testProblemsId,jdbcType=VARCHAR}
@@ -299,4 +290,22 @@
       degree_of_difficulty = #{degreeOfDifficulty,jdbcType=INTEGER}
     where test_problems_id = #{testProblemsId,jdbcType=VARCHAR}
   </update>
+  <select id="selectByRand" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      随机获取n条数据
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from test_problems
+    ORDER BY RAND() LIMIT #{limit,jdbcType=INTEGER}
+  </select>
+  <select id="selectProblemsByLimit" resultMap="BaseResultMap" parameterType="com.wangzefeng.pojo.model.Page" >
+  <!--
+    随机获取n条数据
+  -->
+  select
+  <include refid="Base_Column_List" />
+  from test_problems
+  ORDER BY propositional_date desc LIMIT #{pageNo,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+</select>
 </mapper>
