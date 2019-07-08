@@ -94,6 +94,13 @@ public class ExamController extends BaseController {
         return "1";
     }
 
+    @ResponseBody
+    @RequestMapping(value="/deleteProblems")
+    public String deleteProblems(String problemIds){
+        examService.deleteProblems(problemIds);
+        return "1";
+    }
+
 
 
 }

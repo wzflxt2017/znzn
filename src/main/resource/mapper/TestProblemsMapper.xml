@@ -308,4 +308,7 @@
   from test_problems
   ORDER BY propositional_date desc LIMIT #{pageNo,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
 </select>
+  <delete id="deleteByProblemsIds" parameterType="java.lang.String">
+    delete from test_problems  where instr(concat(',',#{problemsIds,jdbcType=VARCHAR},','),concat(',',test_problems_id,','))>0
+  </delete>
 </mapper>

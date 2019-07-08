@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息比对</title>
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./xlsx.core.min.js"></script>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            color: white;
+        }
+        .row{
+            margin-top: 20px;text-align: center;
+        }
+        #psFileName,#companyFileName{
+            width: 200px;
+            border:1px solid #000000;
+        }
+    </style>
+</head>
+<body background="beijing.jpg">
+
+<div>
+    <h2 style="text-align: center;">信息比对</h2>
+    <h4 style="text-align: center;" class="">注意：选择的excel文件仅读取第一个sheet，</h4>
+    <div class="mt-sm">
+        <input type="file" id="file_ps" style="display:none;" onchange="showInfo(this,'0')" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+        <input type="file" id="file_company" style="display:none;" onchange="showInfo(this,'1')" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <input class="btn" id="psFileName" type="text" placeholder="选择公安的excel文件" readonly onclick="selectFile('0')">
+                <button class="btn btn-primary" onclick="selectFile('0')">选择公安的excel文件</button>
+            </div>
+            <div class="col-lg-6">
+                <input class="btn" id="companyFileName" type="text"  placeholder="选择公司的excel文件" readonly onclick="selectFile('1')">
+                <button class="btn btn-primary" onclick="selectFile('1')">选择公司的excel文件</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <input type="button" value="开始比对" onclick="contrastExcel()" class="btn btn-warning" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+
+            </div>
+        </div>
+        <div class="container" style="color: #000000">
+            <div class="card" id="result">
+                <div class="card-header">比对结果</div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    $(function() {
+        $("#result").hide();
+    });
+
+    function contrastExcel(){
+        var ps_files=$("#file_ps").prop("files");//公安
+        var company_files=$("#file_company").prop("files");//公司
+        if(ps_files.length == 0||company_files.length==0){
+            alert('请先选择好本地文件！');
+            return;
+        }
+        var ps_f = ps_files[0];
+        var co_f = company_files[0];
+        if(!/\.xlsx$/g.test(ps_f.name)||!/\.xlsx$/g.test(co_f.name)) {
+            alert('仅支持读取xlsx格式！');
+            return;
+        }
+        readWorkbookFromLocalFile(ps_f,co_f);
+    }
+
+    function showInfo(obj,data){
+        var pos = obj.value.lastIndexOf("\\")*1;
+        var fileName = obj.value.substring(pos+1);
+        if(data=='0'){
+            $("#psFileName").val(fileName);
+        }else{
+            $("#companyFileName").val(fileName);
+        }
+    }
+
+    function selectFile(data) {
+        if(data=='0'){
+            $("#file_ps").click();
+        }else{
+            $("#file_company").click();
+        }
+    }
+
+    // 读取本地excel文件
+    function readWorkbookFromLocalFile(ps_file,co_file) {
+        var ps_reader = new FileReader();
+        var co_reader = new FileReader();
+        var ps_json="";
+        var co_json="";
+        var reValue=[];
+        ps_reader.onload = function(e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+            ps_json=readWorkbook(workbook);
+            co_reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {type: 'binary'});
+                co_json=readWorkbook(workbook);
+                console.log(ps_json);
+                console.log(co_json);
+                for(var ps in ps_json){
+                    var psIsByco=false;
+                    for(var co in co_json){
+                        if(ps_json[ps].证件号==co_json[co].证件号){
+                            if(ps_json[ps].房间号!=co_json[co].房间号){
+                                reValue.push("公安文件下第"+(parseInt(ps)+2)+"行数据与公司文件下第"+(parseInt(co)+2)+"行数据'证件号'相同，但是'房间号'不同");
+                            }
+                            if(ps_json[ps].旅客姓名!=co_json[co].旅客姓名){
+                                reValue.push("公安文件下第"+(parseInt(ps)+2)+"行数据与公司文件下第"+(parseInt(co)+2)+"行数据'证件号'相同，但是'旅客姓名'不同");
+                            }
+                            psIsByco=true;
+                            break;
+                        }
+                    }
+                    if(!psIsByco){
+                        reValue.push("公安文件下第"+(parseInt(ps)+2)+"行数据在公司文件下未找到");
+                    }
+                }
+                for(var co in co_json){
+                    var psIsByco=false;
+                    for(var ps in ps_json){
+                        if(ps_json[ps].证件号==co_json[co].证件号){
+                            psIsByco=true;
+                            break;
+                        }
+                    }
+                    if(!psIsByco){
+                        reValue.push("公司文件下第"+(parseInt(co)+2)+"行数据在公司文件下未找到");
+                    }
+                }
+                console.log(reValue);
+                debugger;
+                if(reValue.length>0){
+                    var str="";
+                    for(var i in reValue){
+                        str+=(parseInt(i)+1)+"："+reValue[i]+";<br/>"
+                    }
+                    $("#result").find(".card-body").html(str)
+                }else{
+                    $("#result").find(".card-body").html("完全匹配")
+                }
+                $("#result").show();
+            };
+            co_reader.readAsBinaryString(co_file);
+        };
+        ps_reader.readAsBinaryString(ps_file);
+        // co_reader.readAsBinaryString(co_file);
+    }
+
+    // 从网络上读取某个excel文件，url必须同域，否则报错
+    function readWorkbookFromRemoteFile(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', url, true);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function(e) {
+            if(xhr.status == 200) {
+                var data = new Uint8Array(xhr.response)
+                var workbook = XLSX.read(data, {type: 'array'});
+                if(callback) callback(workbook);
+            }
+        };
+        xhr.send();
+    }
+
+    // 读取 excel文件
+    function outputWorkbook(workbook) {
+        var sheetNames = workbook.SheetNames; // 工作表名称集合
+        sheetNames.forEach(name => {
+            var worksheet = workbook.Sheets[name]; // 只能通过工作表名称来获取指定工作表
+            for(var key in worksheet) {
+                // v是读取单元格的原始值
+                console.log(key, key[0] === '!' ? worksheet[key] : worksheet[key].v);
+            }
+        });
+    }
+
+    function readWorkbook(workbook) {
+        var sheetNames = workbook.SheetNames; // 工作表名称集合
+        var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
+        var json = XLSX.utils.sheet_to_json(worksheet);
+        return json;
+        // document.getElementById('result').innerHTML = csv2table(csv);
+    }
+
+
+    /**
+     * 通用的打开下载对话框方法，没有测试过具体兼容性
+     * @param url 下载地址，也可以是一个blob对象，必选
+     * @param saveName 保存文件名，可选
+     */
+    function openDownloadDialog(url, saveName)
+    {
+        if(typeof url == 'object' && url instanceof Blob)
+        {
+            url = URL.createObjectURL(url); // 创建blob地址
+        }
+        var aLink = document.createElement('a');
+        aLink.href = url;
+        aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+        var event;
+        if(window.MouseEvent) event = new MouseEvent('click');
+        else
+        {
+            event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        }
+        aLink.dispatchEvent(event);
+    }
+
+
+    function exportExcel() {
+        var csv = table2csv($('#result table')[0]);
+        var sheet = csv2sheet(csv);
+        var blob = sheet2blob(sheet);
+        openDownloadDialog(blob, '导出.xlsx');
+    }
+
+    function exportSpecialExcel() {
+        var aoa = [
+            ['主要信息', null, null, '其它信息'], // 特别注意合并的地方后面预留2个null
+            ['姓名', '性别', '年龄', '注册时间'],
+            ['张三', '男', 18, new Date()],
+            ['李四', '女', 22, new Date()]
+        ];
+        var sheet = XLSX.utils.aoa_to_sheet(aoa);
+        sheet['!merges'] = [
+            // 设置A1-C1的单元格合并
+            {s: {r: 0, c: 0}, e: {r: 0, c: 2}}
+        ];
+        openDownloadDialog(sheet2blob(sheet), '单元格合并示例.xlsx');
+    }
+</script>
+</body>
+</html>

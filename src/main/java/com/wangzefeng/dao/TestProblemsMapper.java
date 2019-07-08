@@ -33,4 +33,5 @@ public interface TestProblemsMapper {
 
     List<TestProblems> selectByRand(int limit);
     List<TestProblems> selectProblemsByLimit(Page page);
+    int deleteByProblemsIds(String problemsIds);
 }

@@ -19,4 +19,5 @@ public interface ExamService {
     List<TestExamination> selectByUser(String sysUserId);
     List<TestType> selectAllType();
     String addProblem(TestProblems testProblems, TestProblemOptionModel optionModel);
+    String deleteProblems(String problems);
 }

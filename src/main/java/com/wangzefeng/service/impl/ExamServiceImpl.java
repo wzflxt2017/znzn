@@ -83,4 +83,10 @@ public class ExamServiceImpl implements ExamService {
         List<TestProblems> testProblems = testProblemsMapper.selectProblemsByLimit(new Page(start,count,null));
         return testProblems;
     }
+
+    @Override
+    public String deleteProblems(String problems) {
+        testProblemsMapper.deleteByPrimaryKey(problems);
+        return null;
+    }
 }
